@@ -8,7 +8,12 @@ module.exports = app => {
     })
   );
 
-  app.get('/auth/google/callback', passport.authenticate('google'));
+  app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/auth/google' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
 
   app.get('/api/logout', (req, res) => {
     req.logout();
